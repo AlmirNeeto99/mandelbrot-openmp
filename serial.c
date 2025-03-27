@@ -3,8 +3,15 @@
 
 #include "common.h"
 
-int main(int argn, char **argv)
+int main(int argc, char *argv[])
 {
+
+    char arguments[256];
+
+    if (fgets(arguments, sizeof(arguments), stdin) != NULL)
+    {
+        printf("-> Arguments: %s\n", arguments);
+    }
 
     int width = 7680, height = 4320;
 
