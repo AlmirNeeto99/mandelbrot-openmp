@@ -1,6 +1,6 @@
 GCC=gcc
 
-LINK=-lm
+LINK=-lm -lpng
 PARALLEL_LINK=$(LINK) -fopenmp
 
 DEPS=common.c
