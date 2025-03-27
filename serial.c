@@ -1,18 +1,16 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-
-#include "png.h"
 
 #include "common.h"
+#include "png.h"
 
-int main(int argc, char *argv[])
-{
-
+int main(int argc, char *argv[]) {
     int width, height, maxIterations;
     double xMin, xMax, yMin, yMax;
 
-    scanf("%d %d %lf %lf %lf %lf %d", &width, &height, &xMin, &xMax, &yMin, &yMax, &maxIterations);
+    scanf("%d %d %lf %lf %lf %lf %d", &width, &height, &xMin, &xMax, &yMin,
+          &yMax, &maxIterations);
 
     printf("-> Starting mandelbrot generation\n");
     printf("-> Resolution: %dx%d\n", width, height);
@@ -29,11 +27,8 @@ int main(int argc, char *argv[])
     int iterations = 0;
     short int escaped = 0;
 
-    for (int i = 0; i < width; i++)
-    {
-        for (int j = 0; j < height; j++)
-        {
-
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
             escaped = 0;
             iterations = 0;
 
@@ -43,11 +38,8 @@ int main(int argc, char *argv[])
             c.real = xLinearSpace[i];
             c.imag = yLinearSpace[j];
 
-            while (iterations < maxIterations)
-            {
-
-                if (abs_complex(z) > 2)
-                {
+            while (iterations < maxIterations) {
+                if (abs_complex(z) > 2) {
                     escaped = 1;
                     break;
                 }
@@ -63,31 +55,30 @@ int main(int argc, char *argv[])
         }
     }
 
-    FILE *mandelbrot = fopen("mandelbrot.png", "wb");
+    char *outputName = "mandelbrot.png";
 
-    if (!mandelbrot)
-    {
-        printf("Unable to open output file\n");
+    FILE *mandelbrot = fopen(outputName, "wb");
+
+    if (!mandelbrot) {
+        printf("Unable to open %s file\n", outputName);
         return -1;
     }
 
-    png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-    if (!png)
-    {
+    png_structp png =
+        png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+    if (!png) {
         fclose(mandelbrot);
         return -1;
     }
 
     png_infop info = png_create_info_struct(png);
-    if (!info)
-    {
+    if (!info) {
         png_destroy_write_struct(&png, NULL);
         fclose(mandelbrot);
         return -1;
     }
 
-    if (setjmp(png_jmpbuf(png)))
-    {
+    if (setjmp(png_jmpbuf(png))) {
         png_destroy_write_struct(&png, &info);
         fclose(mandelbrot);
         return -1;
@@ -95,19 +86,20 @@ int main(int argc, char *argv[])
 
     png_set_compression_level(png, 0);
     png_init_io(png, mandelbrot);
-    png_set_IHDR(png, info, width, height, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+    png_set_IHDR(png, info, width, height, 8, PNG_COLOR_TYPE_RGB,
+                 PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT,
+                 PNG_FILTER_TYPE_DEFAULT);
     png_write_info(png, info);
 
     png_bytep row = (png_bytep)malloc(3 * width * sizeof(png_byte));
     int color = 0;
-    for (int y = 0; y < height; y++)
-    {
-        for (int x = 0; x < width; x++)
-        {
-            color = (int)(((double)space[x * height + y] / maxIterations) * 255);
-            row[x * 3] = color;     // Red
-            row[x * 3 + 1] = color; // Green
-            row[x * 3 + 2] = color; // Blue
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            color =
+                (int)(((double)space[x * height + y] / maxIterations) * 255);
+            row[x * 3] = color;      // Red
+            row[x * 3 + 1] = color;  // Green
+            row[x * 3 + 2] = color;  // Blue
         }
         png_write_row(png, row);
     }
@@ -115,6 +107,7 @@ int main(int argc, char *argv[])
 
     png_write_end(png, NULL);
     png_destroy_write_struct(&png, &info);
+
     fclose(mandelbrot);
 
     free(space);

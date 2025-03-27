@@ -1,33 +1,27 @@
+#include "common.h"
+
 #include <math.h>
 #include <stdlib.h>
 
-#include "common.h"
-
-double abs_complex(complex number)
-{
+double abs_complex(complex number) {
     return sqrt(pow(number.real, 2) + pow(number.imag, 2));
 }
 
-double *create_linear_space(double min, double max, int size)
-{
-
+double *create_linear_space(double min, double max, int size) {
     double step = ((double)(max - min)) / size;
     double *space = malloc(sizeof(double) * size);
 
-    for (int i = 0; i < size; i++)
-    {
+    for (int i = 0; i < size; i++) {
         space[i] = min + (i * step);
     }
     return space;
 }
 
-double *create_2d_linear_space(int width, int height)
-{
+double *create_2d_linear_space(int width, int height) {
     return malloc(sizeof(double) * width * height);
 }
 
-complex complex_squared(complex number)
-{
+complex complex_squared(complex number) {
     complex squared;
     squared.real = pow(number.real, 2) - pow(number.imag, 2);
     squared.imag = 2 * number.real * number.imag;

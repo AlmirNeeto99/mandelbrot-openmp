@@ -1,5 +1,4 @@
-typedef struct complex
-{
+typedef struct complex {
     double real;
     double imag;
 } complex;
