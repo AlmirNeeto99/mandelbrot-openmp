@@ -35,13 +35,13 @@ It column in the input file represents a required information for running the ge
 You can feed the application by running:
 
 ```bash
-cat inputs/8k | ./serial
+cat inputs/8k.txt | ./serial
 ```
 
 Or:
 
 ```bash
-cat inputs/8k | ./parallel
+cat inputs/8k.txt | ./parallel
 ```
 
 ## Output:
