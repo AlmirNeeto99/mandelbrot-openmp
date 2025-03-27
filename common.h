@@ -4,4 +4,6 @@ typedef struct complex
     double imag;
 } complex;
 
-double complex_absolute_value(complex complex_number);
+double complex_modulus(complex complex_number);
+double *create_linear_space(double min, double max, int size);
+double *create_2d_linear_space(int width, int height);
