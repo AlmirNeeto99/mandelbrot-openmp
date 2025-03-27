@@ -3,9 +3,9 @@
 
 #include "common.h"
 
-double complex_modulus(complex complex_number)
+double abs_complex(complex number)
 {
-    return sqrt((complex_number.real) + (complex_number.imag));
+    return sqrt(pow(number.real, 2) + pow(number.imag, 2));
 }
 
 double *create_linear_space(double min, double max, int size)
@@ -24,4 +24,12 @@ double *create_linear_space(double min, double max, int size)
 double *create_2d_linear_space(int width, int height)
 {
     return malloc(sizeof(double) * width * height);
+}
+
+complex complex_squared(complex number)
+{
+    complex squared;
+    squared.real = pow(number.real, 2) - pow(number.imag, 2);
+    squared.imag = 2 * number.real * number.imag;
+    return squared;
 }
