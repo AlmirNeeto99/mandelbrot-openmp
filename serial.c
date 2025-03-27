@@ -26,14 +26,16 @@ int main(int argc, char *argv[])
     double *yLinearSpace = create_linear_space(yMin, yMax, height);
 
     complex z, c;
-    int iteration = 0;
+    int iterations = 0;
+    short int escaped = 0;
 
     for (int i = 0; i < width; i++)
     {
         for (int j = 0; j < height; j++)
         {
 
-            iteration = 0;
+            escaped = 0;
+            iterations = 0;
 
             z.real = 0;
             z.imag = 0;
@@ -41,18 +43,23 @@ int main(int argc, char *argv[])
             c.real = xLinearSpace[i];
             c.imag = yLinearSpace[j];
 
-            while (iteration < maxIterations && abs_complex(z) <= 2)
+            while (iterations < maxIterations)
             {
 
+                if (abs_complex(z) > 2)
+                {
+                    escaped = 1;
+                    break;
+                }
                 z = complex_squared(z);
 
                 z.real = z.real + c.real;
                 z.imag = z.imag + c.imag;
 
-                iteration++;
+                iterations++;
             }
 
-            space[j + i * height] = iteration;
+            space[j + i * height] = escaped ? iterations : 0;
         }
     }
 
