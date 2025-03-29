@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
         short int escaped = 0;
         int num = omp_get_thread_num();
 
-        printf("-> Thread #%d running from %d to %d\n", num, grainSize * num,
+        printf("-> Thread #%d running from column %d to %d\n", num, grainSize * num,
                grainSize * (num + 1));
 
         for (int i = grainSize * num; i < grainSize * (num + 1); i++) {
