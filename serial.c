@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
     printf("-> Complex plane limit (y): [%lf, %lf]\n", yMin, yMax);
     printf("-> Max number of iterations: %d\n", maxIterations);
 
-    int *space = malloc(sizeof(int) * width * height);
+    int *iterationsSpace = malloc(sizeof(int) * width * height);
 
     double *xLinearSpace = create_linear_space(xMin, xMax, width);
     double *yLinearSpace = create_linear_space(yMin, yMax, height);
@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
                 iterations++;
             }
 
-            space[j + i * height] = escaped ? iterations : 0;
+            iterationsSpace[j + i * height] = escaped ? iterations : 0;
         }
     }
 
@@ -95,8 +95,9 @@ int main(int argc, char *argv[]) {
     int color = 0;
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            color =
-                (int)(((double)space[x * height + y] / maxIterations) * 255);
+            color = (int)(((double)iterationsSpace[x * height + y] /
+                           maxIterations) *
+                          255);
             row[x * 3] = color;      // Red
             row[x * 3 + 1] = color;  // Green
             row[x * 3 + 2] = color;  // Blue
@@ -110,7 +111,7 @@ int main(int argc, char *argv[]) {
 
     fclose(mandelbrot);
 
-    free(space);
+    free(iterationsSpace);
     free(xLinearSpace);
     free(yLinearSpace);
 
