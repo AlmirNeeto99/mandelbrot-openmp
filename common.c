@@ -27,3 +27,7 @@ complex complex_squared(complex number) {
     squared.imag = 2 * number.real * number.imag;
     return squared;
 }
+
+int *create_iterations_space(int width, int height) {
+    return (int *)malloc(sizeof(int) * width * height);
+}

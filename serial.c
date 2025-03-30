@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
     printf("-> Complex plane limit (y): [%lf, %lf]\n", yMin, yMax);
     printf("-> Max number of iterations: %d\n", maxIterations);
 
-    int *iterationsSpace = malloc(sizeof(int) * width * height);
+    int *iterationsSpace = create_iterations_space(width, height);
 
     double *xLinearSpace = create_linear_space(xMin, xMax, width);
     double *yLinearSpace = create_linear_space(yMin, yMax, height);
