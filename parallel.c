@@ -31,13 +31,15 @@ int main(int argc, char *argv[]) {
 #pragma omp parallel num_threads(numThreads)
 
     {
+        double start = omp_get_wtime();
+        int num = omp_get_thread_num();
+
         complex z, c;
         int iterations = 0;
         short int escaped = 0;
-        int num = omp_get_thread_num();
 
-        printf("-> Thread #%d running from column %d to %d\n", num, grainSize * num,
-               grainSize * (num + 1));
+        printf("-> Thread #%d running from column %d to %d\n", num,
+               grainSize * num, grainSize * (num + 1));
 
         for (int i = grainSize * num; i < grainSize * (num + 1); i++) {
             for (int j = 0; j < height; j++) {
@@ -66,6 +68,8 @@ int main(int argc, char *argv[]) {
                 iterationsSpace[j + i * height] = escaped ? iterations : 0;
             }
         }
+        double end = omp_get_wtime();
+        printf("\t-> Thread #%d done in %.6f seconds!\n", num, end - start);
     }
 
     char *outputName = "mandelbrot.png";
