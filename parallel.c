@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
                     iterations++;
                 }
 
-                iterationsSpace[width * i + j] = escaped ? iterations : 0;
+                iterationsSpace[i * height + j] = escaped ? iterations : 0;
             }
         }
         double end = omp_get_wtime();
@@ -112,9 +112,9 @@ int main(int argc, char *argv[]) {
     int color = 0;
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            color =
-                (int)(((double)iterationsSpace[x * width + y] / maxIterations) *
-                      255);
+            color = (int)(((double)iterationsSpace[x * height + y] /
+                           maxIterations) *
+                          255);
             row[x * 3] = color;      // Red
             row[x * 3 + 1] = color;  // Green
             row[x * 3 + 2] = color;  // Blue
