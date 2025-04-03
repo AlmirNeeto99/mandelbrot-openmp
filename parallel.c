@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
         printf("\t-> Thread #%d done in %.6f seconds!\n", num, end - start);
     }
 
-    char *outputName = "mandelbrot.png";
+    const char *outputName = "mandelbrot.png";
 
     FILE *mandelbrot = fopen(outputName, "wb");
 
@@ -125,7 +125,7 @@ int main(int argc, char *argv[]) {
         for (int x = 0; x < width; x++) {
             proportion =
                 (double)iterationsSpace[x * height + y] / maxIterations;
-            color = (int)proportion * 255;
+            color = (int)(proportion * 255);
             row[x * 3] = color;      // Red
             row[x * 3 + 1] = color;  // Green
             row[x * 3 + 2] = color;  // Blue
