@@ -117,12 +117,15 @@ int main(int argc, char *argv[]) {
     png_write_info(png, info);
 
     png_bytep row = (png_bytep)malloc(3 * width * sizeof(png_byte));
+
     int color = 0;
+    double proportion = 0;
+
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            color = (int)(((double)iterationsSpace[x * height + y] /
-                           maxIterations) *
-                          255);
+            proportion =
+                (double)iterationsSpace[x * height + y] / maxIterations;
+            color = (int)proportion * 255;
             row[x * 3] = color;      // Red
             row[x * 3 + 1] = color;  // Green
             row[x * 3 + 2] = color;  // Blue
