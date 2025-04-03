@@ -26,48 +26,56 @@ int main(int argc, char *argv[]) {
     int numThreads = 10;
     printf("-> Using %d threads\n", numThreads);
 
-    int grainSize = (int)width / numThreads;
+    int grainSize = 100;
 
-#pragma omp parallel num_threads(numThreads)
+    int currentPos = 0;
+
+#pragma omp parallel num_threads(numThreads) shared(currentPos)
 
     {
         double start = omp_get_wtime();
         int num = omp_get_thread_num();
 
-        complex z, c;
-        int iterations = 0;
-        short int escaped = 0;
+        int myPos = 0;
+        while (1) {
+#pragma omp critical
+            {
+                myPos = currentPos++;
+            }
+            if ((myPos + 1) * grainSize >= width) break;
 
-        printf("-> Thread #%d running from column %d to %d\n", num,
-               grainSize * num, grainSize * (num + 1));
+            complex z, c;
+            int iterations = 0;
+            short int escaped = 0;
+            for (int i = grainSize * myPos; i < grainSize * (myPos + 1); i++) {
+                for (int j = 0; j < height; j++) {
+                    escaped = 0;
+                    iterations = 0;
 
-        for (int i = grainSize * num; i < grainSize * (num + 1); i++) {
-            for (int j = 0; j < height; j++) {
-                escaped = 0;
-                iterations = 0;
+                    z.real = 0;
+                    z.imag = 0;
 
-                z.real = 0;
-                z.imag = 0;
+                    c.real = xLinearSpace[i];
+                    c.imag = yLinearSpace[j];
 
-                c.real = xLinearSpace[i];
-                c.imag = yLinearSpace[j];
+                    while (iterations < maxIterations) {
+                        if (abs_complex(z) > 2) {
+                            escaped = 1;
+                            break;
+                        }
+                        z = complex_squared(z);
 
-                while (iterations < maxIterations) {
-                    if (abs_complex(z) > 2) {
-                        escaped = 1;
-                        break;
+                        z.real = z.real + c.real;
+                        z.imag = z.imag + c.imag;
+
+                        iterations++;
                     }
-                    z = complex_squared(z);
 
-                    z.real = z.real + c.real;
-                    z.imag = z.imag + c.imag;
-
-                    iterations++;
+                    iterationsSpace[i * height + j] = escaped ? iterations : 0;
                 }
-
-                iterationsSpace[i * height + j] = escaped ? iterations : 0;
             }
         }
+
         double end = omp_get_wtime();
         printf("\t-> Thread #%d done in %.6f seconds!\n", num, end - start);
     }
