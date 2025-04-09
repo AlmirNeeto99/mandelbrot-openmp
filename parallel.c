@@ -25,8 +25,9 @@ int main(int argc, char *argv[]) {
     double *yLinearSpace = create_linear_space(yMin, yMax, height);
 
     int grainSize = 100;
-
     int currentPos = 0;
+
+    double programStart = omp_get_wtime();
 
 #pragma omp parallel num_threads(numThreads) shared(currentPos)
 
@@ -76,6 +77,18 @@ int main(int argc, char *argv[]) {
 
         double end = omp_get_wtime();
         printf("\t-> Thread #%d done in %.6f seconds!\n", num, end - start);
+    }
+
+    double programEnd = omp_get_wtime();
+
+    FILE *results = fopen("experiments.csv", "a");
+
+    if (!results) {
+        printf("Unable to write results!");
+    } else {
+        fprintf(results, "%d,%d,%lf\n", numThreads, maxIterations,
+                programEnd - programStart);
+        fclose(results);
     }
 
     const char *outputName = "mandelbrot.png";
