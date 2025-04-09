@@ -6,25 +6,23 @@
 #include "png.h"
 
 int main(int argc, char *argv[]) {
-    int width, height, maxIterations;
+    int width, height, maxIterations, numThreads;
     double xMin, xMax, yMin, yMax;
 
-    scanf("%d %d %lf %lf %lf %lf %d", &width, &height, &xMin, &xMax, &yMin,
-          &yMax, &maxIterations);
+    scanf("%d %d %lf %lf %lf %lf %d %d", &width, &height, &xMin, &xMax, &yMin,
+          &yMax, &maxIterations, &numThreads);
 
     printf("-> Starting mandelbrot generation in \"Parallel\"\n");
     printf("-> Resolution: %dx%d\n", width, height);
     printf("-> Complex plane limit (x): [%lf, %lf]\n", xMin, xMax);
     printf("-> Complex plane limit (y): [%lf, %lf]\n", yMin, yMax);
     printf("-> Max number of iterations: %d\n", maxIterations);
+    printf("-> Number of Threads: %d\n", numThreads);
 
     int *iterationsSpace = create_iterations_space(width, height);
 
     double *xLinearSpace = create_linear_space(xMin, xMax, width);
     double *yLinearSpace = create_linear_space(yMin, yMax, height);
-
-    int numThreads = 10;
-    printf("-> Using %d threads\n", numThreads);
 
     int grainSize = 100;
 
