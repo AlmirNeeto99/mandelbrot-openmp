@@ -11,8 +11,10 @@ do
 
     for iteration in "${ITERATIONS[@]}"
     do
-        echo Running for $thread-$iteration
+        echo === Running experiment ===
         echo 7680 4320 -2.0 1.0 -1.5 1.5 $iteration $thread > inputs.txt
         cat inputs.txt | $APPLICATION
     done
 done
+
+rm inputs.txt
