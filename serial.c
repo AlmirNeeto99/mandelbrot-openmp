@@ -1,11 +1,19 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
 #include "common.h"
 #include "png.h"
 
+double get_elapsed_time(struct timeval start, struct timeval end) {
+    return (end.tv_sec - start.tv_sec) +
+           (end.tv_usec - start.tv_usec) / 1000000.0;
+}
+
 int main(int argc, char *argv[]) {
+    struct timeval programStart, programEnd;
+
     int width, height, maxIterations;
     double xMin, xMax, yMin, yMax;
 
@@ -26,6 +34,8 @@ int main(int argc, char *argv[]) {
     complex z, c;
     int iterations = 0;
     short int escaped = 0;
+
+    gettimeofday(&programStart, NULL);
 
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
@@ -53,6 +63,18 @@ int main(int argc, char *argv[]) {
 
             iterationsSpace[j + i * height] = escaped ? iterations : 0;
         }
+    }
+
+    gettimeofday(&programEnd, NULL);
+
+    FILE *results = fopen("experiments.csv", "a");
+
+    if (!results) {
+        printf("Unable to write to results\n");
+    } else {
+        fprintf(results, "%d,%d,%lf\n", 0, maxIterations,
+                get_elapsed_time(programStart, programEnd));
+        fclose(results);
     }
 
     char *outputName = "mandelbrot.png";
