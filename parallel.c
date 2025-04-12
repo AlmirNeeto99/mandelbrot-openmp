@@ -86,8 +86,9 @@ int main(int argc, char *argv[]) {
     if (!results) {
         printf("Unable to write results!");
     } else {
-        fprintf(results, "%d,%d,%lf\n", numThreads, maxIterations,
-                programEnd - programStart);
+        double elapsed = programEnd - programStart;
+        printf("-> Elapsed: %lf\n", elapsed);
+        fprintf(results, "%d,%d,%lf\n", numThreads, maxIterations, elapsed);
         fclose(results);
     }
 
