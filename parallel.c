@@ -41,12 +41,18 @@ int main(int argc, char *argv[]) {
             {
                 myPos = currentPos++;
             }
-            if ((myPos + 1) * grainSize >= width) break;
+
+            if (myPos * grainSize >= width) {
+                break;
+            }
+
+            int upperBound = (myPos + 1) * grainSize;
+            upperBound = upperBound > width ? width : upperBound;
 
             complex z, c;
             int iterations = 0;
             short int escaped = 0;
-            for (int i = grainSize * myPos; i < grainSize * (myPos + 1); i++) {
+            for (int i = grainSize * myPos; i < upperBound; i++) {
                 for (int j = 0; j < height; j++) {
                     escaped = 0;
                     iterations = 0;
