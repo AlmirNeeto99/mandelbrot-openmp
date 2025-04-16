@@ -1,16 +1,15 @@
 #!/bin/bash
 
-THREADS=(1 2 5 8 10)
+THREADS=12
 
-ITERATIONS=(10 100 500 1000 5000 10000 50000 100000)
+ITERATIONS=(10 100 1000 10000)
 
 APPLICATION=./parallel
 
-for thread in "${THREADS[@]}"
+for iteration in "${ITERATIONS[@]}"
 do
-
-    for iteration in "${ITERATIONS[@]}"
-    do
+    for ((thread=THREADS; thread>0; thread--))
+    do    
         echo === Running experiment ===
         echo 7680 4320 -2.0 1.0 -1.5 1.5 $iteration $thread > inputs.txt
         cat inputs.txt | $APPLICATION
