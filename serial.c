@@ -67,15 +67,7 @@ int main(int argc, char *argv[]) {
 
     gettimeofday(&programEnd, NULL);
 
-    FILE *results = fopen("experiments.csv", "a");
-
-    if (!results) {
-        printf("Unable to write to results\n");
-    } else {
-        fprintf(results, "%d,%d,%lf\n", 0, maxIterations,
-                get_elapsed_time(programStart, programEnd));
-        fclose(results);
-    }
+    logExperiment(0, maxIterations, get_elapsed_time(programStart, programEnd));
 
     char *outputName = "mandelbrot.png";
 

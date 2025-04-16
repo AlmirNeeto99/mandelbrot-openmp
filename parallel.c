@@ -81,16 +81,7 @@ int main(int argc, char *argv[]) {
 
     double programEnd = omp_get_wtime();
 
-    FILE *results = fopen("experiments.csv", "a");
-
-    if (!results) {
-        printf("Unable to write results!");
-    } else {
-        double elapsed = programEnd - programStart;
-        printf("-> Elapsed: %lf\n", elapsed);
-        fprintf(results, "%d,%d,%lf\n", numThreads, maxIterations, elapsed);
-        fclose(results);
-    }
+    logExperiment(numThreads, maxIterations, programEnd - programStart);
 
     const char *outputName = "mandelbrot.png";
 
