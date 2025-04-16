@@ -44,7 +44,7 @@ void logExperiment(int numberOfThreads, int maxNumberOfIterations,
         return;
     }
 
-    fprintf(experimentFile, "%d,%d,%lf", numberOfThreads, maxNumberOfIterations,
+    fprintf(experimentFile, "%d,%d,%lf\n", numberOfThreads, maxNumberOfIterations,
             elapsedTime);
     fclose(experimentFile);
 }
