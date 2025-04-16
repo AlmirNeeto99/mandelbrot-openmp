@@ -1,6 +1,7 @@
 #include "common.h"
 
 #include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 double abs_complex(complex number) {
@@ -30,4 +31,20 @@ complex complex_squared(complex number) {
 
 int *create_iterations_space(int width, int height) {
     return (int *)malloc(sizeof(int) * width * height);
+}
+
+void logExperiment(int numberOfThreads, int maxNumberOfIterations,
+                   double elapsedTime) {
+    printf("-> Elapsed time: %lf\n", elapsedTime);
+
+    FILE *experimentFile = fopen("experiments.csv", "a");
+
+    if (!experimentFile) {
+        printf("-> Unable to open experiment file.\n");
+        return;
+    }
+
+    fprintf(experimentFile, "%d,%d,%lf", numberOfThreads, maxNumberOfIterations,
+            elapsedTime);
+    fclose(experimentFile);
 }
