@@ -31,6 +31,7 @@ It column in the input file represents a required information for running the ge
 - **yMin**: the min value of y in complex plane
 - **yMax**: the max value of y in complex plane
 - **maxIterations**: the max number of iterations for the mandelbrot
+- **numberOfThreads**: the number of threads when executing in parallel (has no effect when running in serial)
 
 You can feed the application by running:
 
@@ -46,7 +47,7 @@ cat inputs/8k.txt | ./parallel
 
 ## Output:
 
-A PNG file will be rendered in the folder the application is running.
+A PNG file will be rendered in folder the application is running.
 
 Default filename: `mandelbrot.png`
 
