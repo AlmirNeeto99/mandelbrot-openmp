@@ -28,7 +28,6 @@ double abs_complex(complex number);
  * @return A pointer to the array containing the linearly spaced values.
  */
 double *create_linear_space(double min, double max, int size);
-double *create_2d_linear_space(int width, int height);
 /**
  * @brief Allocates memory for a 2D space to store iteration counts.
  *

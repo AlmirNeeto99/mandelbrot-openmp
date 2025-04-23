@@ -18,10 +18,6 @@ double *create_linear_space(double min, double max, int size) {
     return space;
 }
 
-double *create_2d_linear_space(int width, int height) {
-    return malloc(sizeof(double) * width * height);
-}
-
 complex complex_squared(complex number) {
     complex squared;
     squared.real = pow(number.real, 2) - pow(number.imag, 2);
