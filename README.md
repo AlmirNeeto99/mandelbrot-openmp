@@ -3,6 +3,17 @@
 This repository keeps a **Mandelbrot** set implementation in `C`.
 It holds two versions of **Mandelbrot**, in _serial_ and in _parallel_ with **OpenMP** specification.
 
+## Structure
+
+- `serial.c`: contains the code for executing the mandelbrot in serial, i.e., single thread
+- `parallel.c` contains the code for executing the mandelbrot in parallel
+- `common.h`: contains the definition of functions used both for serial and parallel codes
+- `common.c`: contains the `commons.h` implementations
+- `Makefile`: contains the rules for build both serial and parallel executables
+- `run-experiments.sh`: a script for helping executing parallel code for different situations.
+- `inputs/`: folder containing inputs examples, can be used both for serial and parallel version
+- `analysis/`: folder containing analysis code and charts generations
+
 ## Building
 
 ### Serial
