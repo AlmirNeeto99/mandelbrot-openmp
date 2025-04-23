@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
 
     double programEnd = omp_get_wtime();
 
-    logExperiment(numThreads, maxIterations, programEnd - programStart);
+    // logExperiment(numThreads, maxIterations, programEnd - programStart);
 
     const char *outputName = "mandelbrot.png";
 

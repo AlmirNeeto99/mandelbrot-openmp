@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
 
     gettimeofday(&programEnd, NULL);
 
-    logExperiment(0, maxIterations, get_elapsed_time(programStart, programEnd));
+    // logExperiment(0, maxIterations, get_elapsed_time(programStart, programEnd));
 
     char *outputName = "mandelbrot.png";
 
