@@ -14,6 +14,25 @@ It holds two versions of **Mandelbrot**, in _serial_ and in _parallel_ with **Op
 - `inputs/`: folder containing inputs examples, can be used both for serial and parallel version
 - `analysis/`: folder containing analysis code and charts generations
 
+## General information
+
+Both versions, serial and parallel, execute almost the same logic.
+
+1. Generate **x** and **y** space to simulate a plane
+2. Generate an iteration count space to hold the value of how many iterations until a pixel escaped
+3. For each pixel coordinate
+    1. Build a complex number
+    2. Iterate until it escapes or reaches the max iteration count
+    3. Log the number of iterations needed to escape
+4. Generate an image where pixel intensity is the number of iterations needed to escape
+
+The key difference in the parallel version lies in the handling of step 3:
+
+1. Define a grain size
+2. Split the process into **N** threads
+3. Each thread executes step 3, independently, for a grain-size chunk of the space
+4. Same as serial step 4, it is only executed by the main thread after all threads have finished
+
 ## Building
 
 ### Serial
