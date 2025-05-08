@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
                         iterations++;
                     }
 
-                    iterationsSpace[i * height + j] = escaped ? iterations : 0;
+                    iterationsSpace[j * width + i] = escaped ? iterations : 0;
                 }
             }
         }
@@ -132,8 +132,7 @@ int main(int argc, char *argv[]) {
 
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
-            proportion =
-                (double)iterationsSpace[x * height + y] / maxIterations;
+            proportion = (double)iterationsSpace[y * width + x] / maxIterations;
             color = (int)(proportion * 255);
             row[x * 3] = color;      // Red
             row[x * 3 + 1] = color;  // Green
