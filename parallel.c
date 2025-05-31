@@ -3,7 +3,6 @@
 #include <stdlib.h>
 
 #include "common.h"
-#include "png.h"
 
 int main(int argc, char *argv[]) {
     int width, height, maxIterations, numThreads;
@@ -91,61 +90,8 @@ int main(int argc, char *argv[]) {
 
     const char *outputName = "mandelbrot.png";
 
-    FILE *mandelbrot = fopen(outputName, "wb");
-
-    if (!mandelbrot) {
-        printf("Unable to open %s file\n", outputName);
-        return -1;
-    }
-
-    png_structp png =
-        png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-    if (!png) {
-        fclose(mandelbrot);
-        return -1;
-    }
-
-    png_infop info = png_create_info_struct(png);
-    if (!info) {
-        png_destroy_write_struct(&png, NULL);
-        fclose(mandelbrot);
-        return -1;
-    }
-
-    if (setjmp(png_jmpbuf(png))) {
-        png_destroy_write_struct(&png, &info);
-        fclose(mandelbrot);
-        return -1;
-    }
-
-    png_set_compression_level(png, 0);
-    png_init_io(png, mandelbrot);
-    png_set_IHDR(png, info, width, height, 8, PNG_COLOR_TYPE_RGB,
-                 PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT,
-                 PNG_FILTER_TYPE_DEFAULT);
-    png_write_info(png, info);
-
-    png_bytep row = (png_bytep)malloc(3 * width * sizeof(png_byte));
-
-    int color = 0;
-    double proportion = 0;
-
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
-            proportion = (double)iterationsSpace[y * width + x] / maxIterations;
-            color = (int)(proportion * 255);
-            row[x * 3] = color;      // Red
-            row[x * 3 + 1] = color;  // Green
-            row[x * 3 + 2] = color;  // Blue
-        }
-        png_write_row(png, row);
-    }
-    free(row);
-
-    png_write_end(png, NULL);
-    png_destroy_write_struct(&png, &info);
-
-    fclose(mandelbrot);
+    save_result_to_png(outputName, iterationsSpace, width, height,
+                       maxIterations);
 
     free(iterationsSpace);
     free(xLinearSpace);
