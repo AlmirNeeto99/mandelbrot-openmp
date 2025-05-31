@@ -1,3 +1,5 @@
+#include <sys/time.h>
+
 // Struct to represent a complex number
 typedef struct complex {
     double real;

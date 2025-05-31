@@ -102,3 +102,8 @@ int save_result_to_png(const char *fileName, int *iterationsSpace, int width,
 
     return 0;
 }
+
+double get_elapsed_time(struct timeval start, struct timeval end) {
+    return (end.tv_sec - start.tv_sec) +
+           (end.tv_usec - start.tv_usec) / 1000000.0;
+}

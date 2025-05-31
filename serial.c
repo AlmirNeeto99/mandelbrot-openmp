@@ -1,14 +1,8 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/time.h>
 
 #include "common.h"
-
-double get_elapsed_time(struct timeval start, struct timeval end) {
-    return (end.tv_sec - start.tv_sec) +
-           (end.tv_usec - start.tv_usec) / 1000000.0;
-}
 
 int main(int argc, char *argv[]) {
     struct timeval programStart, programEnd;
