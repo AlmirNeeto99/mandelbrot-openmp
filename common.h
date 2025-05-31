@@ -46,3 +46,6 @@ int *create_iterations_space(int width, int height);
  */
 void logExperiment(int numberOfThreads, int maxNumberOfIterations,
                    double elapsedTime);
+
+int save_result_to_png(const char *fileName, int *iterations, int width,
+                       int height, int maxIterations);
