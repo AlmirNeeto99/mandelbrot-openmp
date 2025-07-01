@@ -30,8 +30,8 @@ int *create_iterations_space(int width, int height) {
     return (int *)malloc(sizeof(int) * width * height);
 }
 
-void logExperiment(int numberOfThreads, int maxNumberOfIterations,
-                   double elapsedTime) {
+void logExperiment(int width, int height, int numberOfThreads,
+                   int maxNumberOfIterations, double elapsedTime) {
     printf("-> Elapsed time: %lf\n", elapsedTime);
 
     FILE *experimentFile = fopen("experiments.csv", "a");
@@ -41,7 +41,7 @@ void logExperiment(int numberOfThreads, int maxNumberOfIterations,
         return;
     }
 
-    fprintf(experimentFile, "%d,%d,%lf\n", numberOfThreads,
+    fprintf(experimentFile, "%d,%d,%d,%d,%lf\n", width, height, numberOfThreads,
             maxNumberOfIterations, elapsedTime);
     fclose(experimentFile);
 }
